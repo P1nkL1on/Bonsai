@@ -64,73 +64,46 @@ void AsciiArrows::Tests::arrows_data()
     QTest::addRow("one vert") << Arrows{Arrow({1, 1}, 1, Qt::Vertical)} << QSize(3, 3) << QString(oneVertIn3x3);
     QTest::addRow("three vert") << Arrows{Arrow({1, 1}, 1, Qt::Vertical), Arrow({0, 0}, 1, Qt::Vertical), Arrow({2, 1}, -1, Qt::Vertical), Arrow({1, 2}, -1, Qt::Vertical)} << QSize(3, 3) << QString(fourVertIn3x3);
     QTest::addRow("one vert from outside") << Arrows{Arrow({0, -5}, 6, Qt::Vertical)} << QSize(1, 2) << QString(oneVertIn1x2);
-//    QTest::addRow("one vert outside") << Arrows{Arrow({1, -5}, 5, Qt::Vertical), Arrow({0, 6}, -4, Qt::Vertical)} << QSize(2, 2) << QString(zero2x2);
-//    QTest::addRow("one vert pass throught") << Arrows{Arrow({0, -10}, 20, Qt::Vertical)} << QSize(1, 2) << QString(allVertIn1x2);
-//    QTest::addRow("two vert on each other") << Arrows{Arrow({0, 0}, 2, Qt::Vertical), Arrow({0, 0}, 1, Qt::Vertical)} << QSize(1, 2) << QString(oneVertFullIn1x2);
-//    QTest::addRow("two vert overlap") << Arrows{Arrow({0, 1}, 2, Qt::Vertical), Arrow({0, 0}, 4, Qt::Vertical)} << QSize(1, 4) << QString(oneVertFullIn1x4);
-//    QTest::addRow("three vert seq") << Arrows{Arrow({0, 0}, 2, Qt::Vertical), Arrow({0, 1}, 2, Qt::Vertical), Arrow({0, 2}, 2, Qt::Vertical)} << QSize(1, 4) << QString(oneVertFullIn1x4);
-//    QTest::addRow("two vert close ") << Arrows{Arrow({0, 0}, 2, Qt::Vertical), Arrow({0, 1}, -2, Qt::Vertical)} << QSize(1, 2) << QString(allVertIn1x2);
+    QTest::addRow("one vert outside") << Arrows{Arrow({1, -5}, 5, Qt::Vertical), Arrow({0, 6}, -4, Qt::Vertical)} << QSize(2, 2) << QString(zero2x2);
+    QTest::addRow("one vert pass throught") << Arrows{Arrow({0, -10}, 20, Qt::Vertical)} << QSize(1, 2) << QString(allVertIn1x2);
+    QTest::addRow("two vert on each other") << Arrows{Arrow({0, 0}, 2, Qt::Vertical), Arrow({0, 0}, 1, Qt::Vertical)} << QSize(1, 2) << QString(oneVertFullIn1x2);
+    QTest::addRow("two vert overlap") << Arrows{Arrow({0, 1}, 2, Qt::Vertical), Arrow({0, 0}, 4, Qt::Vertical)} << QSize(1, 4) << QString(oneVertFullIn1x4);
+    QTest::addRow("three vert seq") << Arrows{Arrow({0, 0}, 2, Qt::Vertical), Arrow({0, 1}, 2, Qt::Vertical), Arrow({0, 2}, 2, Qt::Vertical)} << QSize(1, 4) << QString(oneVertFullIn1x4);
+    QTest::addRow("two vert close ") << Arrows{Arrow({0, 0}, 2, Qt::Vertical), Arrow({0, 1}, -2, Qt::Vertical)} << QSize(1, 2) << QString(allVertIn1x2);
 
-//    const char *oneHoriIn3x3 =
-//            "...\n"
-//            ".→.\n"
-//            "...\n";
-//    const char *fourHoriIn3x3 =
-//            "..→\n"
-//            ".→←\n"
-//            "←..\n";
-//    const char *oneHoriIn2x1 =
-//            "→.\n";
-//    const char *allHoriIn2x1 =
-//            "──\n";
-//    const char *oneHoriFullIn2x1 =
-//            "─→\n";
-//    const char *oneHoriFullIn4x1 =
-//            "───→\n";
-//    QTest::addRow("one hori") << Arrows{Arrow({1, 1}, 1, Qt::Horizontal)} << QSize(3, 3) << QString(oneHoriIn3x3);
-//    QTest::addRow("three hori") << Arrows{Arrow({1, 1}, 1, Qt::Horizontal), Arrow({0, 0}, -1, Qt::Horizontal), Arrow({2, 1}, -1, Qt::Horizontal), Arrow({2, 2}, 1, Qt::Horizontal)} << QSize(3, 3) << QString(fourHoriIn3x3);
-//    QTest::addRow("one hori from outside") << Arrows{Arrow({-5, 0}, 6, Qt::Horizontal)} << QSize(2, 1) << QString(oneHoriIn2x1);
-//    QTest::addRow("one hori outside") << Arrows{Arrow({-5, 1}, 5, Qt::Horizontal), Arrow({6, 0}, -4, Qt::Horizontal)} << QSize(2, 2) << QString(zero2x2);
-//    QTest::addRow("one hori pass throught") << Arrows{Arrow({-10, 0}, 20, Qt::Horizontal)} << QSize(2, 1) << QString(allHoriIn2x1);
-//    QTest::addRow("two hori on each other") << Arrows{Arrow({0, 0}, 2, Qt::Horizontal), Arrow({0, 0}, 1, Qt::Horizontal)} << QSize(2, 1) << QString(oneHoriFullIn2x1);
-//    QTest::addRow("two hori overlap") << Arrows{Arrow({1, 0}, 2, Qt::Horizontal), Arrow({0, 0}, 4, Qt::Horizontal)} << QSize(4, 1) << QString(oneHoriFullIn4x1);
-//    QTest::addRow("three hori seq") << Arrows{Arrow({0, 0}, 2, Qt::Horizontal), Arrow({1, 0}, 2, Qt::Horizontal), Arrow({2, 0}, 2, Qt::Horizontal)} << QSize(4, 1) << QString(oneHoriFullIn4x1);
-//    QTest::addRow("two hori close ") << Arrows{Arrow({0, 0}, 2, Qt::Horizontal), Arrow({1, 0}, -2, Qt::Horizontal)} << QSize(2, 1) << QString(allHoriIn2x1);
-
-
-//    const char *oneFromOtherEnd =
-//            "┌─→\n"
-//            "│..\n"
-//            "│..\n";
-//    const char *oneFromOtherCenter =
-//            "↑..\n"
-//            "├─→\n"
-//            "│..\n";
-//    const char *oneFromOtherStart =
-//            "↑..\n"
-//            "│..\n"
-//            "└─→\n";
-//    const char *oneOtherEndOverlap =
-//            "─┬→\n"
-//            ".│.\n"
-//            ".│.\n";
-//    const char *oneOtherCenterOverlap =
-//            "─┼→\n"
-//            ".│.\n"
-//            ".│.\n";
-//    const char *fourCenterOverlaps =
-//            "↑↑.\n"
-//            "├┼→\n"
-//            "└┴→\n";
-//    const char *oneToDiffs =
-//            "...\n"
-//            "...\n"
-//            "──┘\n";
-//    const char *oneToDiffs2 =
-//            "...\n"
-//            "..↑\n"
-//            "──┘\n";
-//    QTest::addRow("start ending") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneFromOtherEnd);
+    const char *oneFromOtherEnd =
+            "┌─→.\n"
+            "│...\n"
+            "│...\n";
+    const char *oneFromOtherCenter =
+            "↑..\n"
+            "├─→\n"
+            "│..\n";
+    const char *oneFromOtherStart =
+            "↑..\n"
+            "│..\n"
+            "└─→\n";
+    const char *oneOtherEndOverlap =
+            "─┬→\n"
+            ".│.\n"
+            ".│.\n";
+    const char *oneOtherCenterOverlap =
+            "─┼→\n"
+            ".│.\n"
+            ".│.\n";
+    const char *fourCenterOverlaps =
+            "↑↑.\n"
+            "├┼→\n"
+            "└┴→\n";
+    const char *oneToDiffs =
+            "...\n"
+            "...\n"
+            "──┘\n";
+    const char *oneToDiffs2 =
+            "...\n"
+            "..↑\n"
+            "──┘\n";
+    QTest::addRow("start ending") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(4, 3) << QString(oneFromOtherEnd);
 //    QTest::addRow("center to end overlap") << Arrows{Arrow({1, 0}, 3, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneOtherEndOverlap);
 //    QTest::addRow("center to center overlap") << Arrows{Arrow({1, 0}, 4, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneOtherCenterOverlap);
 //    QTest::addRow("start center") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 1}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneFromOtherCenter);
@@ -182,6 +155,27 @@ void _rotate(const int n90, QSize &s, QPoint &p, int &l, Qt::Orientation &o)
     }
 }
 
+QString inLine(const QStringList &ss)
+{
+    QList<int> ws;
+    QList<QStringList> lines;
+    int hmax = 0;
+
+    for (const QString &s : ss) {
+        hmax = std::max(s.count("\n"), hmax);
+        ws.append(s.indexOf("\n") - 1);
+        lines.append(s.split("\n", QString::SkipEmptyParts));
+    }
+
+    QString res;
+    for (int y = 0; y <= hmax; ++y) {
+        for (int x = 0; x < lines.size(); ++x)
+            res += ((lines[x].size() > y) ? lines.at(x).at(y) : QString()).leftJustified(ws[x] + 10);
+        res += "\n";
+    }
+    return res;
+}
+
 void AsciiArrows::Tests::arrows()
 {
     QFETCH(Arrows, arrows);
@@ -198,22 +192,21 @@ void AsciiArrows::Tests::arrows()
             qDebug() << "rotation =" << r << "permuts =" << nPermuts;
             AsciiArrows::clearBuffer(b, size);
             for (const Arrow &arrow : arrows) {
-                qDebug() << "    " << std::get<0>(arrow) << (std::get<0>(arrow) + ((std::get<2>(arrow) == Qt::Horizontal) ? QPoint(std::get<1>(arrow), 0) : QPoint(0, std::get<1>(arrow))));
+                // qDebug() << "    " << std::get<0>(arrow) << (std::get<0>(arrow) + ((std::get<2>(arrow) == Qt::Horizontal) ? QPoint(std::get<1>(arrow), 0) : QPoint(0, std::get<1>(arrow))));
                 AsciiArrows::drawArrow(b, QRect(QPoint(0, 0), size), std::get<0>(arrow), std::get<1>(arrow), std::get<2>(arrow));
             }
             const QString res = AsciiArrows::bufferToString(b, size);
             if (res != expected) {
-                qDebug().noquote().nospace()
-                        << ("\nres:\n" + AsciiArrows::bufferToString(b, size, 2))
-                        << ("\naka:\n" + AsciiArrows::bufferToString(b, size, 3))
-                        << ("\nbut expected:\n" + expected);
+                const QString show = inLine({AsciiArrows::bufferToString(b, size, 2), AsciiArrows::bufferToString(b, size, 3), expected});
+                qDebug().noquote().nospace() << "\n\nResult / Result codes / Expected\n\n" << show;
             }
             QCOMPARE(res, expected);
         } while (--nPermuts && std::next_permutation(arrows.begin(), arrows.end()));
 
-        QSize s = size;
-        for (Arrow &arrow : arrows)
+        for (Arrow &arrow : arrows) {
+            QSize s = size;
             _rotate(1, s, std::get<0>(arrow), std::get<1>(arrow), std::get<2>(arrow));
+        }
         size = {size.height(), size.width()};
         expected = _rotate90(expected);
     }

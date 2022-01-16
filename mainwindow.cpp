@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     showMaximized();
 
     QTimer *timer = new QTimer;
-    timer->setInterval(2000);
+    timer->setInterval(10);
     timer->setSingleShot(false);
     connect(timer, &QTimer::timeout, this, [=] {
         m_b.grow();

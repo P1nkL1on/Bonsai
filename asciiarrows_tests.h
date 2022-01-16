@@ -11,6 +11,10 @@ class Tests : public QObject
 private slots:
     void arrows_data();
     void arrows();
+    void rotate90_data();
+    void rotate90();
+    void rotateArrow90_data();
+    void rotateArrow90();
 };
 
 }

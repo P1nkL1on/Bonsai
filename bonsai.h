@@ -15,9 +15,9 @@ public:
 
 private:
     static const size_t m_maxChildren = 1;
-    static const int m_maxLevel = 10;
+    static const int m_maxLevel = 20;
     static const int m_maxY = 16;
-    static const int m_maxX = 10;
+    static const int m_maxX = 22;
     static const int m_maxXperLevel = -1;
 
     Branch(const int x, const int y, const int offset, const int level);

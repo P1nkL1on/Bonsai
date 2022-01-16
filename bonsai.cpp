@@ -46,7 +46,7 @@ void Branch::fillMap(int *b, const QRect rect, int x0, int y0) const
 {
     y0 += m_offset;
     if (m_x)
-        AsciiArrows::drawArrow(b, rect, {x0, y0}, m_x, Qt::Horizontal);
+        AsciiArrows::drawArrow(b, rect, {x0, y0}, m_x + (m_x > 0 ? 1 : m_x < 0 ? -1 : 0), Qt::Horizontal);
     if (m_y)
         AsciiArrows::drawArrow(b, rect, {x0 + m_x, y0}, m_y, Qt::Vertical);
 

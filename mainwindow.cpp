@@ -17,11 +17,11 @@ MainWindow::MainWindow(QWidget *parent)
     showMaximized();
 
     QTimer *timer = new QTimer;
-    timer->setInterval(10);
+    timer->setInterval(2000);
     timer->setSingleShot(false);
     connect(timer, &QTimer::timeout, this, [=] {
         m_b.grow();
-        const QString text = m_b.map(QRect(0, 0, 100, 40));
+        const QString text = m_b.map(QRect(0, 0, 200, 40));
         m_q->setText(text);
     });
     timer->start();

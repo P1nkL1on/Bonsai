@@ -14,7 +14,7 @@ public:
     QString map(const QRect &rect) const;
 
 private:
-    static const size_t m_maxChildren = 1;
+    static const size_t m_maxChildren = 10;
     static const int m_maxLevel = 20;
     static const int m_maxY = 16;
     static const int m_maxX = 22;

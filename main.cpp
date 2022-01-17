@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     AsciiArrows::Tests t;
     const int testErr = QTest::qExec(&t, argc, argv);
     if (testErr)
-        return testErr;
+        ; // return testErr;
 
     QApplication a(argc, argv);
     MainWindow w;

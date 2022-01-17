@@ -21,7 +21,8 @@ MainWindow::MainWindow(QWidget *parent)
     timer->setSingleShot(false);
     connect(timer, &QTimer::timeout, this, [=] {
         m_b.grow();
-        const QString text = m_b.map(QRect(0, 0, 200, 40));
+        QString text = m_b.map(QRect(0, 0, 200, 40));
+        text.replace('.', ' ');
         m_q->setText(text);
     });
     timer->start();

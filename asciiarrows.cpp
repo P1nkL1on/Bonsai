@@ -4,13 +4,61 @@
 
 namespace AsciiArrows {
 
-enum Code {_a, _b, _c, _d, _e, _f, _g, _h, _i, _k, _l, _m, _n, _o, _p, _r, _n2, _o2, _p2, _r2, _err};
+using VV = std::vector<char>;
+
+// m Code {_a, _b, _c, _d, _e, _f, _g, _h, _i, _k, _l, _m, _n, _o, _p, _r, _n2, _o2, _p2, _r2, _err};
 ///         ░,  ─,  │,  └,  ┘,  ┌,  ┐,  ├,  ┤,  ┴,  ┬,  ┼,  ↓,  →,  ←,  ↑,  *↓,  *→,  *←,  *↑,   *
+VV __u    { 0,  0,  1,  1,  1,  0,  0,  1,  1,  1,  0,  1,  1,  0,  0,  0,   2,   0,   0,   0,   0};
+VV __s    {0,0,1,1,0,0,0,1,1,0,0,1,1,0,0,1,1,0,1,1,1,1,1,1,0,0,1,0,0,1,0,0, 0,0, 2,0, 0,2, 0,0, 0,0,};
+VV __d    { 0,  0,  1,  0,  0,  1,  1,  1,  1,  0,  1,  1,  0,  0,  0,  1,   0,   0,   0,   2,   0};
+
+// u is up part, s is left and right accordingly, d is down part
+
+enum Code {
+    _a = 0b00000, //░
+    _r = 0b00001, //↑
+    _p = 0b00010, //←
+    _f = 0b00011, //┌
+    _o = 0b00100, //→
+    _g = 0b00101, //┐
+    _b = 0b00110, //─
+    _l = 0b00111, //┬
+    _n = 0b01000, //↓
+    _c = 0b01001, //│
+    _d = 0b01010, //└
+    _h = 0b01011, //├
+    _e = 0b01100, //┘
+    _i = 0b01101, //┤
+    _k = 0b01110, //┴
+    _m = 0b01111, //┼
+    _r2= 0b10001, //↑ if start
+    _p2= 0b10010, //← if start
+    _o2= 0b10100, //→ if start
+    _n2= 0b11000, //↓ if start
+};
+
+inline int removeStartByte(int c)
+{
+    // check fifth bit
+    if ((c >> 4) & 1U) {
+        c ^= 1U << 4;
+        // arrow but an end type (should be shown as - | accordingly)
+        if (c == 0b0001)
+            c |= 1U << 3;
+        if (c == 0b1000)
+            c |= 1U << 0;
+        if (c == 0b0010)
+            c |= 1U << 2;
+        if (c == 0b0100)
+            c |= 1U << 1;
+    }
+    return c;
+}
 
 void clearBuffer(int *b, const QSize &size)
 {
     for (int i = 0; i < size.width() * size.height(); ++i)
-        b[i] = 0;
+        b[i] = 0b0;
 }
 
 int *__bb;
@@ -21,6 +69,7 @@ void p(
         const int vstart, const int vother, // x and y (or y and x)
         const int smin, const int smax,     // screen clamp min max
         const int length,
+        const int bitInv, const int bitFrw, // set bit to 1 if inv / fwd / both if middle
         F &&f)                              // f() called on x, y, isStart, isEnd, isInverted
 {
     Q_ASSERT(smin <= smax);
@@ -31,18 +80,23 @@ void p(
         return;
     const int ss = std::max(smin, std::min(smax, s));
     const int es = std::max(smin, std::min(smax, e));
-    const int isInv = length < 0;
     int max = es;
     int min = ss;
     if (max < min)
         std::swap(max, min);
 
     for (int v = min; v <= max; ++v) {
-        const bool isStr = v == s;
-        const bool isEnd = v == e;
-        f(v, vother, isStr, isEnd, isInv);
-
-        // qDebug().noquote().nospace() << "\n" << v << "\n" << bufferToString(__bb, __ss, 3);
+        const bool isInv = v == min;
+        const bool isFwd = v == max;
+        int bit = 0b0000;
+        if (!isFwd)
+            bit |= 1U << bitInv;
+        if (!isInv)
+            bit |= 1U << bitFrw;
+        // add a start bit in case its a beginning
+        if ((isFwd || isInv) && (max > min) && (v == s))
+            bit |= 1U << 4;
+        f(v, vother, bit);
     }
 }
 
@@ -54,39 +108,20 @@ void drawArrow(int *b, const QRect &rect, const QPoint &start, const int length,
     __ss = rect.size();
     const int w = rect.width();
     if (orientation == Qt::Horizontal)
-        return p(start.x(), start.y(), rect.left(), rect.right(), length, [b, w](int x, int y, bool isStr, bool isEnd, bool isLft){
-            int *bb = b + y * w + x;
-            switch (*bb) {
-            case _a: /*  ░  */           *bb = isEnd ? (isLft ? _p : _o) : isStr ? (isLft ? _p2 : _o2) : _b; break;
-            case _c: /*  │  */           *bb = isEnd ? (isLft ? _h : _i) : isStr ? (isLft ? _i : _h) : _m; break;
-            case _p: /*  ←  */           *bb = isEnd &&  isLft ? _p : _b; break;
-            case _o: /*  →  */           *bb = isEnd && !isLft ? _o : _b; break;
-            case _r: /*  ↑  */           *bb = isEnd ? (isLft ? _g : _e) : isStr ? (isLft ? _g : _f) : _l; break;
-            case _r2:/*  ↑2 */           *bb = isEnd ? (isLft ? _d : _e) : isStr ? (isLft ? _e : _d) : _l; break;
-            case _b: case _p2: case _o2: *bb = _b; break;
-            default:                     /*qDebug() << "-- unknown" << int(*bb); */*bb = _err; break;
-            }
+        return p(start.x(), start.y(), rect.left(), rect.right(), length, 1, 2, [b, w](int x, int y, int bit){
+            b[y * w + x] |= bit;
         });
-
-    return p(start.y(), start.x(), rect.top(), rect.bottom(), length, [b, w](int y, int x, bool isStr, bool isEnd, bool isDwn){
-        int *bb = b + y * w + x;
-        switch (*bb) {
-        case _a: /*  ░  */           *bb = isEnd ? (isDwn ? _n : _r) : isStr ? (isDwn ? _n2 : _r2) : _c; break;
-        case _b: /*  ─  */           *bb = isEnd ? (isDwn ? _k : _l) : isStr ? (isDwn ? _l : _k) : _m; break;
-        case _n: /*  ↓  */           *bb = isEnd &&  isDwn ? _n : _c; break;
-        case _r: /*  ↑  */           *bb = isEnd && !isDwn ? _r : _c; break;
-        case _o: /*  →  */           *bb = isEnd ? (isDwn ? _f : _e) : isStr ? (isDwn ? _g : _e) : _h; break;
-        case _o2:/*  →2 */           *bb = isEnd ? (isDwn ? _d : _f) : isStr ? (isDwn ? _f : _d) : _h; break;
-        case _c: case _n2: case _r2: *bb = _c; break;
-        default:                     /*qDebug() << "| unknown" << int(*bb); */*bb = _err; break;
-        }
+    return p(start.y(), start.x(), rect.top(), rect.bottom(), length, 3, 0, [b, w](int y, int x, int bit){
+        b[y * w + x] |= bit;
     });
 }
 
 QString bufferToString(int *b, const QSize &size, const int mode)
 {
-    const QString s =  ".─│└┘┌┐├┤┴┬┼↓→←↑│──│*";
-    const QString s2 = " bcdefghiklmnoprMNOP*";
+//    const QString s =  ".─│└┘┌┐├┤┴┬┼↓→←↑│──│*";
+//    const QString s2 = " bcdefghiklmnoprMNOP*";
+    const QString s  = ".↑←┌→┐─┬↓│└├┘┤┴┼";
+    const QString s2 = "arpfogblncdheikm";
     // const QString border = "╔╗╚╝║═";
     const QString border = "####|=";
 
@@ -100,7 +135,7 @@ QString bufferToString(int *b, const QSize &size, const int mode)
         QString l;
         for (int x = 0; x < w; ++x) {
             const int c = b[(h - 1 - y) * w + x];
-            l += source->at(c);
+            l += source->at(removeStartByte(c));
         }
         r += (isBorder ? (border[4] + l + border[4]) : (l)) + '\n';
     }

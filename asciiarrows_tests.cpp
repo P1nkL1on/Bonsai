@@ -104,13 +104,13 @@ void AsciiArrows::Tests::arrows_data()
             "..↑\n"
             "──┘\n";
     QTest::addRow("start ending") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(4, 3) << QString(oneFromOtherEnd);
-//    QTest::addRow("center to end overlap") << Arrows{Arrow({1, 0}, 3, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneOtherEndOverlap);
-//    QTest::addRow("center to center overlap") << Arrows{Arrow({1, 0}, 4, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneOtherCenterOverlap);
-//    QTest::addRow("start center") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 1}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneFromOtherCenter);
-//    QTest::addRow("start beginning") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 0}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneFromOtherStart);
-//    QTest::addRow("four center overlaps") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 0}, 3, Qt::Horizontal), Arrow({1, 0}, 3, Qt::Vertical), Arrow({0, 1}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(fourCenterOverlaps);
+    QTest::addRow("center to end overlap") << Arrows{Arrow({1, 0}, 3, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneOtherEndOverlap);
+    QTest::addRow("center to center overlap") << Arrows{Arrow({1, 0}, 4, Qt::Vertical), Arrow({0, 2}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneOtherCenterOverlap);
+    QTest::addRow("start center") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 1}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneFromOtherCenter);
+    QTest::addRow("start beginning") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 0}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(oneFromOtherStart);
+    QTest::addRow("four center overlaps") << Arrows{Arrow({0, 0}, 3, Qt::Vertical), Arrow({0, 0}, 3, Qt::Horizontal), Arrow({1, 0}, 3, Qt::Vertical), Arrow({0, 1}, 3, Qt::Horizontal)} << QSize(3, 3) << QString(fourCenterOverlaps);
 //    QTest::addRow("one to diffs") << Arrows{Arrow({0, 0}, 3, Qt::Horizontal), Arrow({2, 0}, 1, Qt::Vertical)} << QSize(3, 3) << QString(oneToDiffs);
-//    QTest::addRow("one to diffs 2") << Arrows{Arrow({0, 0}, 3, Qt::Horizontal), Arrow({2, 0}, 2, Qt::Vertical)} << QSize(3, 3) << QString(oneToDiffs2);
+    QTest::addRow("one to diffs 2") << Arrows{Arrow({0, 0}, 3, Qt::Horizontal), Arrow({2, 0}, 2, Qt::Vertical)} << QSize(3, 3) << QString(oneToDiffs2);
 }
 
 QChar _rotate90(const QChar c)
